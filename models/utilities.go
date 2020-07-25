@@ -23,8 +23,8 @@ func Connector() *gorm.DB {
 	// defer db.Close()
 	// Set Stdout as backend logger
 	conn.SetLogger(log.New(os.Stdout, "\r\n", 0))
+	conn.LogMode(true)
 	// Migrate the APP
-	conn.SetLogger(log.New(os.Stdout, "\r\n", 0))
 	conn.AutoMigrate(&User{})
 	conn.AutoMigrate(&Question{})
 	conn.AutoMigrate(&Answer{})
