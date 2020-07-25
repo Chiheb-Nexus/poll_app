@@ -3,12 +3,13 @@ package models
 import (
 	"fmt"
 	"testing"
+
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 func TestQuestionCreation(t *testing.T) {
 	db := Connector()
 	defer db.Close()
-	db.AutoMigrate(&Question{})
 
 	// Create a user
 	db.Create(&User{Username: "nexus", Age: 31})

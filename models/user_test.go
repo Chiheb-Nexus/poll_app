@@ -11,7 +11,6 @@ func TestUserCreation(t *testing.T) {
 
 	db := Connector()
 	defer db.Close()
-	db.AutoMigrate(&User{})
 
 	// Create User
 	db.Create(&User{Username: "nexus", Age: 31})

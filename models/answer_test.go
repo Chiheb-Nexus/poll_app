@@ -10,7 +10,6 @@ import (
 func TestAnswerCreation(t *testing.T) {
 	db := Connector()
 	defer db.Close()
-	db.AutoMigrate(&Answer{})
 
 	var (
 		user     User

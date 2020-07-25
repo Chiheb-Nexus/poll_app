@@ -1,23 +1,33 @@
 package models
 
 import (
+	"fmt"
 	"log"
 	"os"
 
 	"github.com/jinzhu/gorm"
 )
 
+// DB connection
+var DB *gorm.DB
+
 // Connector DB
 func Connector() *gorm.DB {
-	db, err := gorm.Open("sqlite3", "../sqlite3.db")
+	conn, err := gorm.Open("sqlite3", "../db.sqlite3")
 	if err != nil {
+		fmt.Printf("%v\n", err)
 		panic("Cannot connect to DB!")
 	}
 	// FIXME: It will close at this point
 	// You need to defer it in the main func
 	// defer db.Close()
 	// Set Stdout as backend logger
-	db.SetLogger(log.New(os.Stdout, "\r\n", 0))
-
-	return db
+	conn.SetLogger(log.New(os.Stdout, "\r\n", 0))
+	// Migrate the APP
+	conn.SetLogger(log.New(os.Stdout, "\r\n", 0))
+	conn.AutoMigrate(&User{})
+	conn.AutoMigrate(&Question{})
+	conn.AutoMigrate(&Answer{})
+	DB = conn
+	return DB
 }
