@@ -13,7 +13,8 @@ var DB *gorm.DB
 
 // Connector DB
 func Connector() *gorm.DB {
-	conn, err := gorm.Open("sqlite3", "../db.sqlite3")
+	// db.sqlite3 will be at the same level of main.go
+	db, err := gorm.Open("sqlite3", "db.sqlite3")
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		panic("Cannot connect to DB!")
@@ -22,12 +23,12 @@ func Connector() *gorm.DB {
 	// You need to defer it in the main func
 	// defer db.Close()
 	// Set Stdout as backend logger
-	conn.SetLogger(log.New(os.Stdout, "\r\n", 0))
-	conn.LogMode(true)
+	db.SetLogger(log.New(os.Stdout, "\r\n", 0))
+	db.LogMode(true)
 	// Migrate the APP
-	conn.AutoMigrate(&User{})
-	conn.AutoMigrate(&Question{})
-	conn.AutoMigrate(&Answer{})
-	DB = conn
+	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Question{})
+	db.AutoMigrate(&Answer{})
+	DB = db
 	return DB
 }
