@@ -1,6 +1,9 @@
 package models
 
 import (
+	"log"
+	"os"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -13,5 +16,8 @@ func Connector() *gorm.DB {
 	// FIXME: It will close at this point
 	// You need to defer it in the main func
 	// defer db.Close()
+	// Set Stdout as backend logger
+	db.SetLogger(log.New(os.Stdout, "\r\n", 0))
+
 	return db
 }
